@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Ajax message</title>
+        <style>li.info{color: green} li.error{color:red}</style>
+    </h:head>
+    <h:body>
+        <h:messages id="msgbox" infoClass="info" errorClass="error" globalOnly="false"/>
+        <h:form>
+            #{messageBean2.code} valid code <h:inputText value="#{messageBean2.validCode}" required="true" >
+                <f:ajax event="blur" render="msgbox"/>
+            </h:inputText><br/>
+            New Message <h:inputText value="#{messageBean2.msg}"/>
+            <h:commandButton action="#{messageBean2.create()}" value="Create New One">
+                <f:ajax execute="@form"  render="msgbox todos"/>
+                <!-- remember up message component-->
+            </h:commandButton>
+        </h:form>
+        <h:panelGroup id="todos">
+            <ul>
+            <c:forEach items="#{messageBean2.messages}" var="msg">
+                <li>#{msg}</li>
+            </c:forEach>
+            </ul>
+        </h:panelGroup>
+    </h:body>
+</html>
+
